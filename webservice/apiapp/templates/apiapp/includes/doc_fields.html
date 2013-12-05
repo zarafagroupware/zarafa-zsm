@@ -1,0 +1,40 @@
+{% for field in fields %}
+<tr>
+    <th> {{ field.name }} </th>
+    <td>
+        <table class="nested">
+            {% comment %}
+            <tr>
+                <th> Type class </th>
+                <td> {{ field.type }} </td>
+            </tr>
+            {% endcomment %}
+            <tr>
+                <th> Type </th>
+                <td> {{ field.signature }} </td>
+            </tr>
+            <tr>
+                <th> Lazy </th>
+                <td> {{ field.lazy }} </td>
+            </tr>
+            <tr>
+                <th> Nullable </th>
+                <td> {{ field.nullable }} </td>
+            </tr>
+            <tr>
+                <th> Read only </th>
+                <td> {{ field.read_only }} </td>
+            </tr>
+        </table>
+    </td>
+    <td class="desc">
+        {{ field.help_text }}
+        {% if field.example %}
+        <div class="example">
+            Example:
+            <pre class="code">{{ field.example }}</pre>
+            </div>
+        {% endif %}
+    </td>
+</tr>
+{% endfor %}

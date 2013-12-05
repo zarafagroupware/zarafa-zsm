@@ -1,0 +1,11 @@
+dn: cn=group1,ou=groups,ou=zarafa,ou=tenants,__DIT_DN__
+objectClass: zarafa-group
+objectClass: groupOfNames
+zarafaId: 3ce1e36a-5598-451e-8784-bffda2640ed6
+member: __DIT_DN__
+mail:
+zarafaAliases: friends-of-group1@zarafa.com
+zarafaAccount: 1
+zarafaHidden: 0
+zarafaSecurityGroup: 0
+zarafaSendAsPrivilege: uid=milo,ou=users,cn=zarafa,ou=tenants,__DIT_DN__

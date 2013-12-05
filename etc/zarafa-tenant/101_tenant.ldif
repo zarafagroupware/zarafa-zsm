@@ -1,0 +1,30 @@
+dn: ou=zarafa,ou=tenants,__DIT_DN__
+objectClass: organization
+objectClass: zarafa-company
+o: zarafa
+ou: zarafa
+zarafaId: 3ce1e36a-5598-451e-8784-bffda2640ed4
+zarafaAccount: 1
+zarafaHidden: 0
+zarafaMailDomains: zarafa.com
+zarafaMailDomains: zarafa.org
+zarafaViewPrivilege: cn=super-zarafa,ou=tenants,__DIT_DN__
+zarafaAdminPrivilege: uid=milo,ou=users,cn=super-zarafa,ou=tenants,__DIT_DN__
+zarafaSystemAdmin: uid=milo,ou=users,cn=zarafa,ou=tenants,__DIT_DN__
+zarafaQuotaOverride: 50
+zarafaQuotaWarn: 60
+zarafaUserDefaultQuotaOverride: 50
+zarafaUserDefaultQuotaWarn: 50
+zarafaUserDefaultQuotaSoft: 50
+zarafaUserDefaultQuotaHard: 50
+zarafaQuotaUserWarningRecipients: uid=milo,ou=users,cn=zarafa,ou=tenants,__DIT_DN__
+zarafaQuotaCompanyWarningRecipients: uid=milo,ou=users,cn=zarafa,ou=tenants,__DIT_DN__
+zarafaCompanyServer: node1
+
+dn: ou=users,ou=zarafa,ou=tenants,__DIT_DN__
+objectClass: organizationalUnit
+ou: users
+
+dn: ou=groups,ou=zarafa,ou=tenants,__DIT_DN__
+objectClass: organizationalUnit
+ou: groups

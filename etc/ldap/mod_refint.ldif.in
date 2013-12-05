@@ -1,0 +1,5 @@
+dn: cn=module,cn=config
+objectClass: olcModuleList
+cn: module
+#olcModulePath: __LDAP_MODULE_PATH__
+olcModuleLoad: refint

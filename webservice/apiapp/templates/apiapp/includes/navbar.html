@@ -1,0 +1,14 @@
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="brand" href="{% url landing_view %}">Zarafa Server Management API {{ api_name }}</a>
+            <ul class="nav">
+                <li {% if cur_page == "overview" %}class="active"{% endif %}><a href="{% url apidoc_overview api_name=api_name %}">overview</a></li>
+                <li class="divider-vertical"></li>
+                {% for resource in all_resources %}
+                <li {% if cur_page == resource %}class="active"{% endif %}><a href="{% url api_get_doc api_name=api_name resource_name=resource %}">{{ resource }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>

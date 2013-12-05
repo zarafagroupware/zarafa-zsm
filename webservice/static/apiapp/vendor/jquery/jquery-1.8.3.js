@@ -1,0 +1,1 @@
+/home/srepmub/git-zsm/zsm/webservice/apiapp/static/apiapp/vendor/jquery/jquery-1.8.3.js

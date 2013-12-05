@@ -1,0 +1,2 @@
+# The url of the api endpoint
+api_base_url = http://localhost:80/api/v1/

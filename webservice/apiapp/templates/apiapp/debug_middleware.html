@@ -1,0 +1,58 @@
+{% load api_debug_middleware_tags %}
+{% load nav_tags %}
+{% load syntax_tags %}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>api debug view{% if title %} : {{ title }}{% endif %}</title>
+        <link href="{{ STATIC_URL }}apiapp/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link href="{{ STATIC_URL }}apiapp/css/apidoc.css" rel="stylesheet" media="screen">
+        <link href="{{ STATIC_URL }}apiapp/css/syntax.css" rel="stylesheet" media="screen">
+        <style>
+            ul.nav {
+                margin-bottom: 0;
+            }
+            h3 {
+                margin-bottom: 2px;
+            }
+            h4 {
+                margin-bottom: 2px;
+            }
+            ul.breadcrumb {
+                margin-bottom: 2px;
+            }
+            table.resource-table {
+                margin-left: 14px;
+                margin-bottom: 15px;
+            }
+            table.resource-table th {
+                font-weight: normal;
+                text-align: left;
+                width: 125px;
+            }
+            .http-status {
+                padding-bottom: 3px;
+            }
+        </style>
+    </head>
+<body>
+    {% render_nav %}
+
+    <div class="container-fluid">
+        <h3>api debug view{% if title %} : {{ title }}{% endif %}
+             <span class="h3_note"><a href="?raw=1">(raw view)</a></span>
+        </h3>
+        {% render_debug_nav %}
+
+        <div class="http-status">
+            <span class="label {% if status_code > 400 %}label-important{% else %}label-success{% endif %}">HTTP {{ status_code }} {{ status_code_msg }}</span>
+        </div>
+{% if json %}
+{{ json|format_code:"js" }}
+{% else %}
+    No body.
+{% endif %}
+    </div>
+</body>
+</html>

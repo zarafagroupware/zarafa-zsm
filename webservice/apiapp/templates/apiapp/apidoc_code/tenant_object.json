@@ -1,0 +1,16 @@
+// vim: sw=2
+{
+  "groups": [
+    "/api/v1/tenants/5657abbef4964abaac782d64f0f94f1c/groups/81bd685169cf4a0d9544e6737b4b8c7a/"
+  ],
+  "id": "5657abbef4964abaac782d64f0f94f1c",
+  "mailDomains": [
+    "cloudy.com"
+  ],
+  "name": "cloudy.com",
+  "resourceUri": "/api/v1/tenants/5657abbef4964abaac782d64f0f94f1c/",
+  "users": [
+    "/api/v1/tenants/5657abbef4964abaac782d64f0f94f1c/users/a3297ff3e7e44a2b88a9e0ab56c3844c/",
+    "/api/v1/tenants/5657abbef4964abaac782d64f0f94f1c/users/67d943b07ec94cde9cd4c07c368dcac7/"
+  ],
+}

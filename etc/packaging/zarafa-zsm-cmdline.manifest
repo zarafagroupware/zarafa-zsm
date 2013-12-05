@@ -1,0 +1,21 @@
+## Global excludes
+
+-*.pyc
+-*.pyo
+-*/.git*
+-*/.svn*
+
+## Project packages
+
++libzsm/*
+
++cmdline/__init__.py
++cmdline/cli
++cmdline/conf/*
++cmdline/rest_client/*
++cmdline/zsm-client.py
+-cmdline/tests/*
+
+## Dependencies
+
++requests/*

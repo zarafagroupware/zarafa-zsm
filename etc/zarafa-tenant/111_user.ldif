@@ -1,0 +1,55 @@
+dn: uid=john,ou=users,ou=zarafa,ou=tenants,__DIT_DN__
+objectClass: top
+objectClass: zarafa-user
+objectClass: inetOrgPerson
+zarafaId: 3ce1e36a-5598-451e-8784-bffda2640ed5
+uid: john
+cn: John Doe
+sn: Doe
+userPassword: secret
+mail: john@example.com
+zarafaAliases: j.doe@example.com
+zarafaUserServer: node1
+zarafaAccount: 1
+zarafaAdmin: 0
+zarafaEnabledFeatures: imap
+zarafaDisabledFeatures: pop3
+zarafaQuotaOverride: 1
+zarafaQuotaWarn: 1000000000
+zarafaQuotaSoft: 1100000000
+zarafaQuotaHard: 1200000000
+zarafaSharedStoreOnly: 0
+#zarafaResourceType:  # N/A
+#zarafaResourceCapacity:  # N/A
+zarafaSendAsPrivilege: uid=milo,ou=users,cn=zarafa,ou=tenants,__DIT_DN__
+zarafaUserArchiveServers: archivenode
+telephoneNumber: 123
+#otherTelephone:  # undefined
+#otherFacsimileTelephoneNumber:  # undefined
+mobile: 456
+homePhone: 789
+#otherHomePhone:  # undefined
+facsimileTelephoneNumber: 012
+pager: 345
+#jpegPhoto:  # disable for now
+description: my favorite user
+departmentNumber: A-1
+physicalDeliveryOfficeName: Office Z
+l: Delft
+title: mr
+initials: M O
+preferredLanguage: nl
+employeeNumber: 1231
+postalAddress: 47 Centrum
+#company:  # undefined
+#co: Netherlands  # disallowed
+st: Zuid Holland
+streetAddress: 47 Centrum
+postalCode: 0154
+postOfficeBox: 5
+#assistant:  # undefined
+#url:  # undefined
+#wwwHomePage:  # undefined
+#directReports:  # undefined
+#manager:  # N/A
+#memberOf:  # undefined

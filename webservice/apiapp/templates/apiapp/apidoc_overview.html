@@ -1,0 +1,348 @@
+{% extends "apiapp/apidoc_base.html" %}
+{% load apidoc_tags %}
+{% load syntax_tags %}
+
+{% block content %}
+    <h1>API v1 Documentation</h1>
+
+    <h2>Introduction</h2>
+    Zarafa Server Management (ZSM) is an administration API
+    for a cluster of Zarafa servers (or a single server, in the simple case)
+    that allows you to manage them programmatically. As such, it exposes entities in
+    that cluster, like users, tenants, servers etc, and allows you to manage
+    their lifecycle (create them, update them, delete them etc.) through a
+    <abbr title="Representational State Transfer">REST</abbr> API. </p>
+
+    <p> In particular, it makes it possible to write management scripts to perform 
+    periodic tasks using the API, but also to write fully fledged frontends that allow
+    users to manage the cluster using a <abbr title="graphical user interface">gui</abbr>
+    (desktop program, web application, mobile application etc.).
+    </p>
+
+    <h3>The frontend is a backend</h3>
+
+    <p>ZSM functions as a bridge between the Zarafa cluster and the outside world.
+    It is effectively the frontend to the cluster and the backend to a user interface.</p>
+
+    <img class="center" src="{{ STATIC_URL }}apiapp/img/zsm_ecosystem.png"/>
+
+    <h3>A REST API</h3>
+
+    <p>ZSM is a REST API, which means that entities in the cluster are
+    represented as <em>resources</em>. A resource is an object-like representation
+    of a collection of data as key/value pairs. This is expressed very naturally
+    in <abbr title="JavaScript Object Notation">JSON</abbr>, which is the format
+    ZSM uses. The following listing demonstrates a tenant (a company/organization)
+    resource. Some fields have been omitted for brevity. </p>
+
+    {% load_code "apidoc_code/tenant_object.json" %}
+
+    <p>This resource lives at the location specified by the <code>resourceUri</code>
+    field, namely <code>/api/v1/tenants/5657abbef4964abaac782d64f0f94f1c/</code>.
+    
+    <p>Here, 
+    <ul>
+        <li>the url <code>/api/v1/</code> represents the <em>endpoint</em> of the API, </li>
+        <li>and the url <code>/api/v1/tenants/</code> represents the endpoint of the
+        tenants resource, ie. the collection of tenants. </li>
+        <li>Finally,
+        <code>/api/v1/tenants/5657abbef4964abaac782d64f0f94f1c/</code> represents
+        an individual tenant. </li>
+    </ul>
+
+    <p> You can interact with any of these urls programmatically. They provide
+    different services represented as different HTTP methods (or verbs).</p>
+
+
+    <h2>Resources</h2>
+
+    <p>In ZSM each resource is member of a resource <em>type</em>. The resource
+    type defines where the resource lives (the url namespace it occupies), 
+    the fields it has,
+    the services it provides etc. The type is also a grouping, so collectively,
+    all resources of type <code>user</code> belong to the collection
+    <code>users</code>. A resource does not have a dedicated field which
+    specifies its type. Instead, the type is determined by where in the API
+    the resources lives. Given this, in what follows we will use the notion of type
+    and collection somewhat interchangeably.
+
+    <h3>Resource types</h3>
+
+    <p>The resource types available in ZSM are the following. </p>
+
+    <table class="table">
+        <tr>
+            <th>Type</th>
+            <th>Apidoc</th>
+            <th>Schema</th>
+            <th>Endpoint</th>
+        </tr>
+        <tr>
+            <td>contacts</td>
+            <td><a href="{% url api_get_doc api_name=api_name resource_name="contacts" %}">apidoc</a></td>
+            <td><a href="{% url api_get_schema api_name=api_name resource_name="contacts" %}">schema</a></td>
+            <td>{{ "/api/v1/tenants/{tenant_id}/contacts/"|format_template_url }}</td>
+        </tr>
+        <tr>
+            <td>groups</td>
+            <td><a href="{% url api_get_doc api_name=api_name resource_name="groups" %}">apidoc</a></td>
+            <td><a href="{% url api_get_schema api_name=api_name resource_name="groups" %}">schema</a></td>
+            <td>{{ "/api/v1/tenants/{tenant_id}/groups/"|format_template_url }}</td>
+        </tr>
+        <tr>
+            <td>servers</td>
+            <td><a href="{% url api_get_doc api_name=api_name resource_name="servers" %}">apidoc</a></td>
+            <td><a href="{% url api_get_schema api_name=api_name resource_name="servers" %}">schema</a></td>
+            <td>{{ "/api/v1/servers/"|format_template_url }}</td>
+        </tr>
+        <tr>
+            <td>tenants</td>
+            <td><a href="{% url api_get_doc api_name=api_name resource_name="tenants" %}">apidoc</a></td>
+            <td><a href="{% url api_get_schema api_name=api_name resource_name="tenants" %}">schema</a></td>
+            <td>{{ "/api/v1/tenants/"|format_template_url }}</td>
+        </tr>
+        <tr>
+            <td>users</td>
+            <td><a href="{% url api_get_doc api_name=api_name resource_name="users" %}">apidoc</a></td>
+            <td><a href="{% url api_get_schema api_name=api_name resource_name="users" %}">schema</a></td>
+            <td>{{ "/api/v1/tenants/{tenant_id}/users/"|format_template_url }}</td>
+        </tr>
+    </table>
+
+    <p> Each resource type/resource collection has its own documentation page
+    with all the detailed information about that type. </p>
+    
+    <p> Resources may be nested under other resources. In this case we say
+    that the parent resource <em>contains</em> the child resource (eg.
+    a tenant contains users, another way of saying that users can only
+    exist within a tenant). </p>
+
+    <img class="center" src="{{ STATIC_URL }}apiapp/img/resource_structure.png"/>
+
+    <p> Accordingly, the <code>resourceUri</code> of a
+    user resource contains the <code>resourceUri</code> of a tenant resource:
+    <code>{{ "/api/v1/tenants/{tenant_id}/users/{user_id}/"|format_template_url }}</code>.
+    </p>
+
+    <h3>Resource fields</h3>
+
+    <p> Each resource type has a list of <em>fields</em>, which represent the key/value
+    pairs we saw earlier. Some fields of a resource are value fields 
+    (strings, integers, booleans, datetimes), while
+    others are relational fields. A relational field expects as its value a relation
+    to another resource, which is expressed by its <code>resourceUri</code>. This is how users
+    may belong to groups, for instance, even though the two resources are both at the same
+    level in the hierarchy.  </p>
+
+    <p> All resource types have two special fields: <code>id</code> and
+    <code>resourceUri</code>. These are both read only and their values are assigned
+    by the API. The <code>id</code> field holds the identifier of the resource
+    and is globally unique across the API (in fact, it corresponds to the 
+    <code>zarafaId</code> attribute in LDAP, which in turn, is globally 
+    unique in the LDAP tree). The value of the <code>id</code> field is used to construct
+    the value of the <code>resourceUri</code> field.</p>
+
+    <p><em>Lazy fields</em> are fields that are more expensive to retrieve. They are excluded
+    in the list view, but included in the detail view.  </p>
+
+    <p><em>Nullable fields</em> are fields that permit empty values. For most field types
+    this is the value <code>null</code>. For list fields it is the empty list <code>[]</code>.
+    </p>
+
+    <p><em>Read only fields</em> are fields that may only be read. Note that you may
+    still supply values for these fields, but they will simply be ignored. In fact, this is
+    what makes JSON responses round-trippable: you may receive a response, update the
+    JSON object and post it back, without having to remove the read-only fields.
+    </p>
+
+    <div class="alert alert-info">
+    <strong>Strings are utf-8</strong>
+    All strings that you receive from the API are in utf-8 and this
+    is also how you must encode your requests. Failure will do so will result in
+    undefined behavior. Both LDAP and Zarafa, the two backends behind the API where
+    your data will flow, support unicode.</div>
+
+    <h3>Views</h3>
+
+    <p> Each type of resource has a set of <em>views</em>. A view is simply a url
+    in the API (or a url pattern if it contains variables) that
+    you can interact with. It supports a given set of operations. All resources have a
+    <strong>list</strong> view and a <strong>detail</strong> view. The list view suppports
+    operations on a collection of resources
+    (list the resources, create a new resource in the collection), while the detail view supports
+    operations on a single resource (view it, update it, delete it etc.). </p>
+
+    <table class="table">
+        <tr>
+            <th>View</th>
+            <th>HTTP method</th>
+            <th>Url pattern</th>
+            <th>Explanation</th>
+        </tr>
+        <tr>
+            <td>list</td>
+            <td>GET</td>
+            <td>{{ "/api/v1/tenants/"|format_template_url }}</td>
+            <td>A collection of tenants with their details is returned</td>
+        </tr>
+        <tr>
+            <td>list</td>
+            <td>POST</td>
+            <td>{{ "/api/v1/tenants/"|format_template_url }}</td>
+            <td>Tenant is created</td>
+        </tr>
+        <tr>
+            <td>detail</td>
+            <td>GET</td>
+            <td>{{ "/api/v1/tenants/{tenant_id}/"|format_template_url }}</td>
+            <td>Tenant details are returned</td>
+        </tr>
+        <tr>
+            <td>detail</td>
+            <td>PUT</td>
+            <td>{{ "/api/v1/tenants/{tenant_id}/"|format_template_url }}</td>
+            <td>Tenant is updated</td>
+        </tr>
+        <tr>
+            <td>detail</td>
+            <td>DELETE</td>
+            <td>{{ "/api/v1/tenants/{tenant_id}/"|format_template_url }}</td>
+            <td>Tenant is removed</td>
+        </tr>
+    </table>
+
+    <p> Some resource types have additional views, see the documentation for each
+    resource type for a full list.  </p>
+
+
+    <h3>Access controls</h3>
+
+    <p>Views are associated with <em>permissions</em>. A request to a given view using a
+    given HTTP method
+    maps to a particular permission. (Eg. a GET on the detail view in the users resource
+    maps to the permission <code>ViewUser</code>.) </p>
+
+    <p>In order to make a valid request the client must be:</p>
+    <ul>
+        <li>Authenticated (ie. supply valid credentials so we can establish his identity)</li>
+        <ul>
+            <li>If not authenticated the HTTP status code will be <span class="label label-important">401<span></li>
+        </ul>
+        <li>Authorized (ie. we know it is Clark, but does he have permission to see this user?)</li>
+        <ul>
+            <li>If not authorized the HTTP status code will be <span class="label label-important">403<span></li>
+        </ul>
+    </ul>
+
+    <p>Permissions are derived in two ways:
+    </p>
+    <ul>
+        <li>As privileges. This is a permission that a user (by himself, or as member
+        of a group) has, eg. "Clark may create tenants". </li>
+        <ul>
+            <li>The <em>privs</em> view makes it possible to set/get privileges on a
+            user/group resource.  </li>
+        </ul>
+        <li>From <abbr title="Access Control List" >ACL</abbr>s. This is a permission
+        that a user (by himself, or as a member of a group) has <em>on a given resource</em>,
+        eg. "Clark may create users in tenant Cloudy.com".</li>
+        <ul>
+            <li>The <em>acl</em> view makes it
+            possible to set/get permissions on a resource for a user/group.  </li>
+        </ul>
+    </ul>
+
+    <p>See the documentation page for a given resource for an exhaustive list of the
+    permissions that apply. </p>
+
+
+    <h2>Interacting with the API</h2>
+
+    <h3>Getting around</h3>
+
+    <p>Even though you will find most of the information you need to build
+    a client by navigating through the API documentation, the API also supports
+    <abbr title="Hypermedia as the Engine of Application State">HATEOAS</abbr>.
+    This means that the API provides built-in facilities to introspect its
+    structure. At the
+    <a href="{% url api_v1_top_level api_name=api_name %}">API endpoint</a> you
+    will find a map of the API listing all the resources, their schema and their
+    views. You can consume this data in your client program. (For example, you
+    could build a gui program with an input form generated from the field listing
+    in the schema.)</p>
+
+    <p> While not covered in this documentation, it is the recommended
+    way to build a client program and maintain it in the face of future changes
+    in the API. </p>
+
+    <h3>Authenticating</h3>
+
+    <p>All actions in the API (apart from accessing the API documentation and resource
+    schema) must be performed on behalf of an existing user. When using HTTP Basic Auth
+    pass
+    <code>{{ "{username}@{tenant}:{password}"|format_template_url }}</code> as the
+    authentication token. </p>
+
+    <h3>Pagination</h3>
+
+    <p>The API supports pagination. In the common case you would not
+    request the entire collection (if it is large), but rather paginate
+    through it. If you request a list of resources, you will always get
+    a header that indicates the position of the result set in the collection.
+    For example:</p>
+
+    {% load_code "apidoc_code/meta_header.json" %}
+
+    <p>These values can be passed as query parameters in the URL,
+    so if you want to retrieve the second page you would pass
+    <code>?offset=20</code> appended to the URL. You can also
+    pass <code>?limit=0</code> to disable pagination and get the
+    whole collection.</p>
+
+    <h3>Standard headers</h3>
+
+    <p> All requests to the API and responses from it are in JSON. This means you
+    should set: </p>
+
+    <ul>
+        <li> <code>Accept: application/json</code> for all requests
+        to indicate that you accept JSON, and </li>
+        <li><code>Content-Type: application/json</code> whenever
+        you make a request that includes a body. </li>
+    </ul>
+
+
+    <h2><a name="examples"></a>Code examples</h2>
+
+    <p>In what follows we will see some code samples in Python. They require
+    the <a href="http://python-requests.org">requests</a> library,
+    which is an emerging standard in HTTP client
+    applications.</p>
+
+    <h3>Create a new user</h3>
+
+    <p>The following creates a new user:</p>
+
+    {% load_code "apidoc_code/create_user.py" %}
+
+    <p>This will generate the following response (most fields
+    omitted for brevity): </p>
+
+    {% load_code "apidoc_code/user_object.json" %}
+
+
+    <h3>List all users of a tenant</h3>
+
+    <p>The following gives a list of the users of
+    a tenant:</p>
+
+    {% load_code "apidoc_code/list_users.py" %}
+
+    <p>This generates the following response, again, with most
+    fields omitted:</p>
+
+    {% load_code "apidoc_code/user_collection.json" %}
+
+
+
+{% endblock content %}

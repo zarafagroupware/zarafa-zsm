@@ -4,6 +4,6 @@ Zarafa Server Management is a designed for provisioning tenants, users and group
 
 Disclaimer: Zarafa Server Management API is still in development stage. Using this product in production is for own risk, Zarafa B.V. can not be held responsible for dataloss or issues caused by the product.
 
-More information in the Zarafa wiki:
+More information can be found in the Zarafa wiki:
 
 http://www.zarafa.com/wiki/index.php/Zarafa_Server_Management_Server_API_Installation

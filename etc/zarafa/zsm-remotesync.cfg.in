@@ -1,0 +1,23 @@
+##############################################################
+# API SETTINGS
+
+# The url of the api endpoint
+api_base_url = http://localhost:80/api/v1/
+
+##############################################################
+# ZARAFA SERVER1 SETTINGS
+
+# The name of the Zarafa server (as per server_name in server.cfg)
+zarafa_server1_name = zarafa1
+
+##############################################################
+# SUPERTENANT SETTINGS
+
+# The name of the supertenant
+origin_tenant_name = origin
+
+# The username of the supertenant admin user
+origin_admin_username = admin
+
+# The password of the supertenant admin user
+origin_admin_password = a

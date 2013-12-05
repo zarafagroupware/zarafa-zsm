@@ -1,0 +1,8 @@
+dn: uid=john-stub,ou=users,ou=zarafa,ou=tenants,__DIT_DN__
+objectClass: top
+objectClass: zarafa-user
+objectClass: inetOrgPerson
+zarafaId: 3ce1e36a-5598-451e-8784-effda2640ed5
+uid: john-stub
+cn: John Doe Stub
+sn: Doe Stub

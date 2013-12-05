@@ -1,0 +1,18 @@
+## Global excludes
+
+-*.pyc
+-*.pyo
+-*/.git*
+-*/.svn*
+
+## Project packages
+
++libzsm/*
+
++remote_sync/*
+
+## Dependencies
+
++pumpkin/*
+
++requests/*

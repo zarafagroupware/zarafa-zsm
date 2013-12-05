@@ -1,0 +1,77 @@
+##############################################################
+# API SETTINGS
+
+# The url of the api endpoint
+api_base_url = http://localhost:80/api/v1/
+
+# Enable formated json output when viewing urls in a browser
+enable_api_debug_view = true
+
+##############################################################
+# LDAP SETTINGS
+
+# The LDAP socket to bind to
+ldap_socket = ldap://localhost:389
+
+# The LDAP user to authenticate as (the distinguished name)
+ldap_login = cn=admin,dc=zarafa
+
+# The password to use for LDAP authentication
+ldap_password = zarafa
+
+# Toggle LDAP TLS
+ldap_tls = false
+
+# The base DN of the LDAP tree
+ldap_basedn = dc=zarafa
+
+##############################################################
+# ZARAFA SETTINGS
+
+# The Zarafa socket to bind to. Possible schemes:
+#  file:///var/run/zarafa
+#  http://localhost:236/
+#  https://localhost:237/
+zarafa_socket = file:///var/run/zarafa
+
+# The Zarafa user to authenticate as
+zarafa_admin_username = SYSTEM
+
+# The password to use for Zarafa authentication
+zarafa_admin_password = SYSTEM
+
+# The path to the ssl client private key to use with Zarafa
+zarafa_sslkey_file = /etc/zarafa/sslkeys/client.pem
+
+# The password for the ssl client private key to use with Zarafa
+zarafa_sslkey_pass = zarafa
+
+##############################################################
+# ZARAFA SERVER1 SETTINGS
+
+# The name of the Zarafa server (as per server_name in server.cfg)
+zarafa_server1_name = zarafa1
+
+# The hostname/ip address of the Zarafa server
+zarafa_server1_hostname = 127.0.0.1
+
+# The Unix socket of the Zarafa server
+zarafa_server1_file_path = /var/run/zarafa
+
+# The HTTP port of the Zarafa server
+zarafa_server1_http_port = 236
+
+# The SSL port of the Zarafa server
+zarafa_server1_ssl_port = 237
+
+##############################################################
+# SUPERTENANT SETTINGS
+
+# The name of the supertenant
+origin_tenant_name = origin
+
+# The username of the supertenant admin user
+origin_admin_username = admin
+
+# The password of the supertenant admin user
+origin_admin_password = a

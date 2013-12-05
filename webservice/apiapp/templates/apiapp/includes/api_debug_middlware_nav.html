@@ -1,0 +1,34 @@
+{% if breadcrumb %}
+    <ul class="breadcrumb">
+        {% for elem in breadcrumb %}
+        <li><a {% if forloop.last %} class="active"{% endif %} {% if elem.url %}href="{{ elem.url }}"{% endif %}>{{ elem.title }}</a> {% if not forloop.last %}<span class="divider">/</span>{% endif %}</li>
+        {% endfor %}
+    </ul>
+{% endif %}
+
+<table class="resource-table">
+    {% if resource_name %}
+    <tr>
+        <th>
+            {{ resource_name }} resource:
+        </th>
+        <td>
+            {% for link in links %}
+                <a href="{{ link.url }}">{{ link.title }}</a>{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        </td>
+    </tr>
+    {% endif %}
+    {% if children %}
+    <tr>
+        <th>
+            drill downs:
+        </th>
+        <td>
+            {% for child in children %}
+                <a href="{{ child.url }}">{{ child.title }}</a>{% if not forloop.last %},{% endif %}
+            {% endfor %}
+        </td>
+    </tr>
+    {% endif %}
+</table>

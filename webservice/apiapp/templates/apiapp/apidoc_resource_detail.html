@@ -1,0 +1,45 @@
+{% extends "apiapp/apidoc_base.html" %}
+{% load apidoc_tags %}
+
+{% block extrahead %}
+{% endblock extrahead %}
+
+{% block content %}
+    <h1>{{ resource_name }} <span class="h1_note"><a href="{% url api_get_schema api_name=api_name resource_name=resource_name %}">(schema)</a></span></h1>
+    <h3>Views</h3>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th style="width: 90px"> View </th>
+                <th style="width: 180px"> Permission </th>
+                <th style="width: 90px"> Method </th>
+                <th> Url pattern </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for view in views %}
+            <tr>
+                <td> {{ view.view_name }} </td>
+                <td> {{ view.permission }} </td>
+                <td> {{ view.method }} </td>
+                <td> {{ view.template_uri|format_template_url }} </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Fields</h3>
+    <p>The following attributes are supported for a &quot;{{ resource_name }}&quot; resource:</p>
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th style="width: 240px"> Field name </th>
+                <th style="width: 190px"> Field properties </th>
+                <th> Description </th>
+            </tr>
+        </thead>
+        <tbody>
+            {% render_fields resource=resource_obj %}
+        </tbody>
+    </table>
+{% endblock content %}

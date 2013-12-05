@@ -1,0 +1,5 @@
+include  __LDAP_ETC_PATH__/schema/core.schema
+include  __LDAP_ETC_PATH__/schema/cosine.schema
+include  __LDAP_ETC_PATH__/schema/nis.schema
+include  __LDAP_ETC_PATH__/schema/inetorgperson.schema
+include  zarafa.schema

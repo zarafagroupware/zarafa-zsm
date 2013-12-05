@@ -1,0 +1,54 @@
+##############################################################
+# REMOTE LDAP SETTINGS
+
+remote_ldap_socket = ldap://extesting.ztest.nl:389
+remote_ldap_login = administrator
+remote_ldap_password = zarafa
+remote_ldap_type = ad
+
+##############################################################
+# TENANT TO SYNC
+
+tenant_dn = DC=EXtesting,DC=ztest,DC=nl
+
+##############################################################
+# COMMON ATTRIBUTE SETTINGS
+
+common_remote_id = objectGUID
+common_remote_changed_date = whenChanged
+
+##############################################################
+# TENANT ATTRIBUTE SETTINGS
+
+tenant_object_classes = domain
+#tenant_extra_filter = 
+tenant_name = name
+
+##############################################################
+# USER ATTRIBUTE SETTINGS
+
+user_object_classes = user, person
+user_extra_filter = (!(objectClass=computer))
+user_username = sAMAccountName
+user_surname = sn
+user_name = name
+user_mail = mail
+user_initials = initials
+user_description = description
+
+##############################################################
+# GROUP ATTRIBUTE SETTINGS
+
+group_object_classes = group
+#group_extra_filter = 
+group_name = cn
+group_members = member
+
+##############################################################
+# CONTACT ATTRIBUTE SETTINGS
+
+contact_object_classes = contact
+#contact_extra_filter = 
+contact_surname = cn
+contact_name = name
+contact_mail = mail

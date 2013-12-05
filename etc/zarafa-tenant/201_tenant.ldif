@@ -1,0 +1,10 @@
+dn: ou=zarafa-stub,ou=tenants,__DIT_DN__
+objectClass: organization
+objectClass: zarafa-company
+o: zarafa-stub
+ou: zarafa-stub
+zarafaId: 3ce1e36a-5598-451e-8784-bffda2640ee4
+
+dn: ou=users,ou=zarafa-stub,ou=tenants,__DIT_DN__
+objectClass: organizationalUnit
+ou: users

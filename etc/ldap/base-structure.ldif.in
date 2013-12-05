@@ -1,0 +1,6 @@
+dn: __DIT_DN__
+objectClass: dcObject
+objectClass: organization
+dc: __DB_NAME__
+o: __DB_NAME__ organization
+description: the __DB_NAME__ organization

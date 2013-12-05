@@ -1,0 +1,7 @@
+dn: olcOverlay=refint,__DB_RDN__,cn=config
+objectClass: olcRefintConfig
+objectClass: olcOverlayConfig
+objectClass: olcConfig
+objectClass: top
+olcOverlay: refint
+olcRefintAttribute: __REF_ATTRIBUTES__

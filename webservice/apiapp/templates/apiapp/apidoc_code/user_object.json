@@ -1,0 +1,10 @@
+// vim: sw=2
+{
+  "id": "65f98b9664a946028217396f0277a3e5",
+  "mail": "john.doe@example.com",
+  "resourceUri": "/api/v1/tenants/681732aad0ed4abdb0f511e2cb8accf2/users/65f98b9664a946028217396f0277a3e5/",
+  "tenant": "/api/v1/tenants/681732aad0ed4abdb0f511e2cb8accf2/",
+  "surname": "Doe",
+  "userServer": "/api/v1/servers/36443f113ac44150aa3732f28e6bf565/",
+  "username": "jdoe"
+}

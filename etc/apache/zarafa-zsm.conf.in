@@ -1,0 +1,27 @@
+{% if is_rpmdistro %}
+# Needed on redhat (should do no harm on debian either?)
+WSGISocketPrefix /var/run/wsgi
+{% endif %}
+
+<VirtualHost *>
+
+    ServerName www.example.com
+    ServerAdmin webmaster@example.com
+
+    LogLevel info
+    ErrorLog {{ logdir }}/zarafa-zsm.error.log
+    CustomLog {{ logdir }}/zarafa-zsm.access.log common
+
+    WSGIScriptAlias / {{ repo_root }}/webservice/zsm/wsgi.py
+
+    # NOTE: seems to work without doing anything?
+    # serve static files
+    #Alias /static {{ static_path }}
+
+    WSGIDaemonProcess {{ process_name }} processes=2 maximum-requests=500 threads=1 python-path={{ repo_root }}/webservice:{{ repo_root }}
+    WSGIProcessGroup {{ process_name }}
+
+    # for basic auth
+    WSGIPassAuthorization On
+
+</VirtualHost>

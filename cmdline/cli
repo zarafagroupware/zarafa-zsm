@@ -1,0 +1,113 @@
+#!/usr/bin/env python
+
+import sys
+
+EXTRA_PATHS = []
+
+for p in EXTRA_PATHS:
+    sys.path.append(p)
+
+
+import cmd
+import re
+
+from conf.settings import config
+from libzsm.rest_client.api import Api
+from libzsm.rest_client.exc import ObjectDoesNotExist
+
+
+def write(msg):
+    msg = u'{0}\n'.format(msg)
+    sys.stdout.write(msg.encode('utf8'))
+    sys.stdout.flush()
+
+def requires_argument(func):
+    def new_func(self, *args, **kwargs):
+        name = func.__name__.replace('do_', '')
+        if not args or not args[0]:
+            write(u'{0} requires an argument'.format(name))
+        else:
+            return func(self, *args, **kwargs)
+    return new_func
+
+def parse_userid(userid):
+    return re.findall('^([^@]+)[@]([^@]+)$', userid)[0]
+
+
+class Client(cmd.Cmd):
+    intro = 'ZSM shell' \
+            '\nType "?" or "help" for help on available commands'
+    prompt = '> '
+
+    def __init__(self, *args, **kwargs):
+        cmd.Cmd.__init__(self, *args, **kwargs)
+
+        self.api = Api(config.API_BASE_URL)
+
+    def do_EOF(self, line):
+        resp = raw_input(u'\nDo you really want to exit (Y/n)? ')
+        if resp == 'n':
+            return False
+        return True
+
+    ## Users
+
+    def do_list_users(self, line):
+        users = self.api.users.all()
+
+        fmt = u'{0:16} {1}'
+
+        propnames = [u'username', u'tenant']
+        ss = [fmt.format(*propnames)]
+        ss.append(78 * u'-')
+        for user in users:
+            propvals = [getattr(user, prop) for prop in propnames]
+            ss.append(fmt.format(*propvals))
+
+        s = u'\n'.join(ss)
+        write(s)
+
+    @requires_argument
+    def do_view_user(self, userid):
+        username, tenantName = parse_userid(userid)
+        try:
+            user = self.api.users.get(username=username, tenant=tenantName)
+            write(user.pprint())
+        except ObjectDoesNotExist:
+            write(u"User {0} not found".format(id))
+
+    @requires_argument
+    def do_create_user(self, line):
+        chunks = re.split('[ ]+', line)
+        userid = chunks[0]
+        username, tenantName = parse_userid(userid)
+
+        tenant = None
+        try:
+            tenant = self.api.tenants.get(name=tenantName)
+        except ObjectDoesNotExist:
+            write(u"Tenant {0} not found".format(tenantName))
+            return
+
+        self.api.users.create(initial=dict(
+            username=username,
+            name=username,
+            surname=username,
+            tenant=tenant,
+        ))
+
+        self.do_view_user(username)
+
+    def complete_create_user(self, text, line, begidx, endidx):
+        lst = self.api.users.schema.fields.keys()
+        if text:
+            return [i for i in lst if i.startswith(text)]
+        return lst
+
+
+if __name__ == '__main__':
+    client = Client()
+    if len(sys.argv) > 1:
+        client.onecmd(' '.join(sys.argv[1:]))
+    else:
+        client.cmdloop()

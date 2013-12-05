@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Zarafa Server Management API</title>
+
+    <link href="{{ STATIC_URL }}apiapp/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+      .sidebar-nav {
+        padding: 9px 0;
+      }
+    </style>
+
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container-fluid">
+          <a class="brand" href="/">Zarafa Server Management API</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="container-fluid">
+      <div class="row-fluid">
+        <div class="span3">
+          <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+              <li class="nav-header">API Reference</li>
+              <li><a href="{% url apidoc_overview api_name=api_name %}">API overview</a></li>
+              <li><a href="{% url api_get_doc api_name=api_name resource_name="tenants" %}">Tenants resource</a></li>
+              <li><a href="{% url api_get_doc api_name=api_name resource_name="users" %}">Users resource</a></li>
+              <li><a href="{% url api_get_doc api_name=api_name resource_name="groups" %}">Groups resource</a></li>
+              <li><a href="{% url api_get_doc api_name=api_name resource_name="contacts" %}">Contacts resource</a></li>
+            </ul>
+          </div><!--/.well -->
+        </div><!--/span-->
+        <div class="span9">
+
+          <div class="row-fluid">
+            <h1>Zarafa Server Management API</h1>
+            <p class="lead">This is a simple landing page for the Zarafa Server
+            Management API. Its only purpose is to serve basic level
+            developer-oriented documentation of the API, mostly
+            reference material.</p>
+          </div>
+
+          <div class="row-fluid">
+            <div class="span6">
+              <h2>v1 API overview</h2>
+              <p>This will give a basic overview of the capabilities
+              of the REST Zarafa Server Management API (ZSM) and how to use the API from
+              your application.</p>
+              <p><a class="btn" href="{% url apidoc_overview api_name=api_name %}">Overview &raquo;</a></p>
+            </div><!--/span-->
+
+            <div class="span6">
+              <h2>v1 API reference</h2>
+              <p>When developing for the Zarafa Server Management API, you can go
+              here to lookup the details of the resources you will be
+              dealing with.</p>
+              <p><a class="btn" href="{% url api_get_doc api_name="v1" resource_name="users" %}">Reference &raquo;</a></p>
+            </div><!--/span-->
+          </div><!--/row-->
+
+          <div class="row-fluid">
+            <div class="span6">
+              <h2>Code examples</h2>
+              <p>View some sample implementations of a client in
+              Python to get you started.</p>
+              <p><a class="btn" href="{% url apidoc_overview api_name=api_name %}#examples">Code examples &raquo;</a></p>
+            </div><!--/span-->
+
+            <div class="span6">
+              <h2>API Endpoint</h2>
+              <p>Go straight to the API endpoint to explore your data.</p>
+              <p><a class="btn" href="{% url api_v1_top_level api_name=api_name %}">API Endpoint &raquo;</a></p>
+            </div><!--/span-->
+          </div><!--/row-->
+
+        </div><!--/span-->
+      </div><!--/row-->
+
+      <hr>
+
+      <footer>
+        <p>&copy; Zarafa 2013</p>
+      </footer>
+
+    </div><!--/.fluid-container-->
+  </body>
+</html>

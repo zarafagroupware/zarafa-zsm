@@ -1,0 +1,53 @@
+#/bin/bash
+
+LDAP_USER="__LDAP_USER__"
+LDAP_GROUP="__LDAP_GROUP__"
+
+ETC_LDAP="__ETC_LDAP__"
+ETC_LDAP_SCHEMA="__ETC_LDAP_SCHEMA__"
+ETC_LDAP_SLAPDD="__ETC_LDAP_SLAPDD__"
+USR_LIB_PATHS="__USR_LIB_LDAP_LOCS__"
+VAR_LIB_LDAP="__VAR_LIB_LDAP__"
+
+DIT_ADMIN_DN="__DIT_ADMIN_DN__"
+ADMIN_PW="__ADMIN_PW__"
+
+cwd=$(cd $(dirname $0); pwd)
+
+
+## Check credentials
+if [ $(whoami) != "root" ]; then
+    echo "Run me as root"
+    exit 1
+fi
+
+## Replace slapd config
+if [ -d ${ETC_LDAP_SLAPDD} ]; then
+    rm -rf ${ETC_LDAP_SLAPDD}
+fi
+cp ${cwd}/slapd.conf ${ETC_LDAP}
+
+## Discover paths
+for d in ${USR_LIB_PATHS}; do
+    if [ -d $d ]; then
+        sed -i "s|__USR_LIB_LDAP__|$d|g" ${ETC_LDAP}/slapd.conf
+    fi
+done
+
+## Deploy schema
+mkdir -p ${ETC_LDAP_SCHEMA}
+cp ${cwd}/zarafa.schema ${ETC_LDAP_SCHEMA}
+
+## Empty ldap database
+(cd ${VAR_LIB_LDAP} && rm -rf *)
+
+## Reload slapd to init the empty database
+/etc/init.d/slapd restart
+/etc/init.d/slapd stop
+
+## Insert ldap data
+slapadd -f ${ETC_LDAP}/slapd.conf < ${cwd}/ldap-base-structure.ldif
+chown -R ${LDAP_USER}:${LDAP_GROUP} ${VAR_LIB_LDAP}
+
+## Start slapd
+/etc/init.d/slapd start

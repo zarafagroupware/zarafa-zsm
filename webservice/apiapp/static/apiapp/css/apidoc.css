@@ -1,0 +1,70 @@
+body {
+    padding-top: 60px;
+    padding-bottom: 40px;
+}
+
+.h1_note a {
+    font-size: 20px;
+    vertical-align: middle;
+}
+.h1_note a {
+    text-decoration: none;
+}
+
+.h3_note a {
+    font-size: 16px;
+    vertical-align: middle;
+}
+.h3_note a {
+    text-decoration: none;
+}
+
+div.example {
+    margin-top: 10px;
+}
+pre.code {
+    color: #D14;
+    background-color: #eaeaea;
+    border: 1px solid #d1d1d8;
+    padding: 5px;
+}
+em.blue {
+    font-style: normal;
+    color: #36c;
+}
+em.green {
+    font-style: normal;
+    color: green;
+}
+em.red {
+    font-style: normal;
+    color: red;
+}
+
+table td.desc {
+    font-size: 13px;
+}
+
+table.nested td,
+table.nested th {
+    border: 0;
+    line-height: 1em;
+    padding: 4px;
+    font-size: 13px;
+}
+table.nested th {
+    padding-left: 0;
+    padding-right: 1em;
+    font-weight: normal;
+}
+table.nested td {
+    color: #36c;
+}
+
+img.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: .5em;
+    margin-bottom: .5em;
+}
