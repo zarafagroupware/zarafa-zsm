@@ -67,7 +67,7 @@ rootdn          "__DIT_ADMIN_DN__"
 rootpw          "__ADMIN_PW__"
 
 # Where the database file are physically stored for database #1
-directory       "__VAR_LIB_LDAP__"
+directory       __VAR_LIB_LDAP__
 
 # The dbconfig settings are used to generate a DB_CONFIG file the first
 # time slapd starts.  They do NOT override existing an existing DB_CONFIG
